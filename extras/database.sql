@@ -69,10 +69,9 @@ CREATE TABLE loan_applications (
   -- Variables internas para el análisis de score
   monthly_income       NUMERIC(15,2),
   monthly_expenses     NUMERIC(15,2),
-  existing_debt        NUMERIC(15,2),
 
   -- Resultado de scoring
-  risk_score           NUMERIC(5,2),
+  point_score           NUMERIC(5,2),
 
   automatic_decision_code VARCHAR(50),
   manual_decision_code    VARCHAR(50) NOT NULL DEFAULT 'pending',
@@ -98,6 +97,21 @@ CREATE TABLE loan_applications (
 
   CONSTRAINT fk_loan_app_manual_decision
     FOREIGN KEY (manual_decision_code) REFERENCES loan_manual_decisions(code)
+);
+
+-- ============================================
+--  TABLA USUARIOS
+-- ============================================
+
+CREATE TABLE users (
+  id                   BIGSERIAL PRIMARY KEY,
+
+  full_name            VARCHAR(200) NOT NULL,
+  email                VARCHAR(200) NOT NULL,
+  pass                 VARCHAR(500) NOT NULL,
+
+  created_at           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at           TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- ============================================
@@ -146,3 +160,12 @@ INSERT INTO loan_manual_decisions (code, name, description) VALUES
   ('pending',   'Pendiente', 'Aún no revisado por oficial de crédito'),
   ('approved',  'Aprobado',  'Aprobado por oficial de crédito'),
   ('rejected',  'Rechazado', 'Rechazado por oficial de crédito');
+
+INSERT INTO users (full_name, email, pass) VALUES
+  ('José Morán',   'jmoran@viamatica.com', '$2b$10$adOv505cKlS1XpYZuHG/6ORse5izbgP5IpG/F2gT7jFHtxxAJPgBy');
+
+INSERT INTO credit_history_summary  (document_number, total_open_accounts, total_current_balance, max_days_past_due, credit_history_level, last_bureau_update_at) VALUES
+  ('0000000001', 3, 23000, 2,  'good', now()),
+  ('0000000002', 1, 2000,  30, 'good', now()),
+  ('0000000003', 1, 1000,  2,  'poor', now()),
+  ('0000000004', 1, 100,   20, 'good', now());
