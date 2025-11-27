@@ -3,9 +3,41 @@ const { sequelize, db_LoanApplication } = require("../../db/config_db");
 const { encriptPassword, sendMailByStatus, sendSmsByStatus } = require("../../helpers/method_helpers");
 const { calculateDecision } = require("../../helpers/method_helpers");
 const { DECISION_AUTOMATIC_STATUS, DECISION_DB_MANUAL_STATUS, LOAN_APPLICATION_DB_STATUS, DECISION_DB_AUTOMATIC_STATUS } = require("../../helpers/params_helper");
+const { Op } = require("sequelize");
+
+exports.listAllLoanApplications = async () => {
+    try{
+
+        const loanApplications = await db_LoanApplication.findAll({
+            limit: 100,
+            order: [['createdAt', 'DESC']],
+        });
+
+        return [true, loanApplications];
+
+    } catch (_) {
+        console.log(_);
+        return [false, LIST_MESSAGES[5555]];
+    }
+}
 
 exports.send = async (req) => {
     try{
+
+        const existLoanNotFinalized = await db_LoanApplication.findOne({
+            where: {
+                documentNumber: req.documentNumber,
+                statusCode: {
+                    [Op.or]: [
+                        LOAN_APPLICATION_DB_STATUS.IN_REVIEW,
+                        LOAN_APPLICATION_DB_STATUS.APPROVED,
+                    ],
+
+                },
+            },
+        });
+
+        if(existLoanNotFinalized) return [false, LIST_MESSAGES[5554].message];
 
         const respCal = await calculateDecision(req);
 
@@ -76,10 +108,10 @@ exports.changeManualDecision = async (loanApplicationId, manualDecisionCode) => 
             },
         });
 
-        if(!loanAppFind) return [false, LIST_MESSAGES[5555]];
+        if(!loanAppFind) return [false, LIST_MESSAGES[5555].message];
 
         if(loanAppFind.statusCode !== LOAN_APPLICATION_DB_STATUS.IN_REVIEW) {
-            return [false, LIST_MESSAGES[5556]];
+            return [false, LIST_MESSAGES[5556].message];
         }
 
         let statusCodeUpdate = null;
@@ -93,7 +125,7 @@ exports.changeManualDecision = async (loanApplicationId, manualDecisionCode) => 
                 break;
         }
 
-        if(!statusCodeUpdate) return [false, LIST_MESSAGES[5555]];
+        if(!statusCodeUpdate) return [false, LIST_MESSAGES[5555].message];
 
         loanAppFind.dataValues.manual_decision_code = manualDecisionCode;
         loanAppFind.dataValues.status_code = statusCodeUpdate;
@@ -123,13 +155,13 @@ exports.finalizeLoanApplication = async (loanApplicationId, action) => {
         if(!loanAppFind) return [false, LIST_MESSAGES[5555]];
 
         if(loanAppFind.statusCode !== LOAN_APPLICATION_DB_STATUS.APPROVED) {
-            return [false, LIST_MESSAGES[5556]];
+            return [false, LIST_MESSAGES[5556].message];
         }
 
         if(action === LOAN_APPLICATION_DB_STATUS.DISBURSED || action === LOAN_APPLICATION_DB_STATUS.CANCELLED) {
             loanAppFind.dataValues.status_code = action;
         } else {
-            return [false, LIST_MESSAGES[5555]];
+            return [false, LIST_MESSAGES[5555]].message;
         }
         
         await db_LoanApplication.upsert(loanAppFind.dataValues);

@@ -6,6 +6,10 @@ const router = express.Router();
 const controller = require("./loan_application_controller");
 const { sessionMiddleware } = require('../../middlewares/session_middleware');
 
+router.get('/list', [
+    sessionMiddleware
+], controller.listAllLoanApplications);
+
 router.post('/send', [
     check('documentNumber', 'documentNumber is a required field').notEmpty(),
     check('fullName', 'fullName is a required field').notEmpty(),

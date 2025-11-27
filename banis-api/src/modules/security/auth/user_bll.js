@@ -14,9 +14,9 @@ exports.login = async (req) => {
             limit: 10,
         });
 
-        if(users.length === 0) return [false, LIST_ERRORS[4003]];
+        if(users.length === 0) return [false, LIST_ERRORS[4003].message];
 
-        if(!await bcrypt.compare(req.pass, users[0].pass)) return [false, LIST_ERRORS[4003]];
+        if(!await bcrypt.compare(req.pass, users[0].pass)) return [false, LIST_ERRORS[4003].message];
 
         const dataUser = users[0];
 
