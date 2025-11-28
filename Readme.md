@@ -11,6 +11,16 @@ Tomar el archivo "example.env" del back y cambiarle el nombre a ".env", luego mo
 
 Para los envios de SMS se está usando Twilio y en el envio de correo un SMTP
 
+## Documentación y rutas
+### Back
+https://documenter.getpostman.com/view/17159188/2sB3dLTBGf
+### Front
+```
+- /             (Formulario)
+- /portal/login (Login)
+- /portal       (Bandeja)
+```
+
 ## Adjuntos
 ### Documento técnico
 Documento sobre la explicación y plan de despliegue (Documento Ténico.pdf)
@@ -138,6 +148,7 @@ banisi-front/
     ├── Dockerfile
     ├── eslint.config.js
     ├── index.html
+    ├── nginx.conf
     ├── package-lock.json
     ├── package.json
     ├── README.md

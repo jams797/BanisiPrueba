@@ -109,7 +109,7 @@ CREATE TABLE users (
   full_name            VARCHAR(200) NOT NULL,
   email                VARCHAR(200) NOT NULL,
   pass                 VARCHAR(500) NOT NULL,
-  otp                  VARCHAR(6)   NOT NULL,
+  otp                  VARCHAR(6)   NULL,
   otp_created          TIMESTAMPTZ  NULL DEFAULT NOW(),
 
   created_at           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
