@@ -9,6 +9,8 @@ Ejecutar el escript inicial que esta en "/extras/database.sql"
 
 Tomar el archivo "example.env" del back y cambiarle el nombre a ".env", luego modificar con sus variables
 
+Para los envios de SMS se está usando Twilio y en el envio de correo un SMTP
+
 ## Adjuntos
 ### Documento técnico
 Documento sobre la explicación y plan de despliegue (Documento Ténico.pdf)
@@ -82,11 +84,11 @@ banis-api/
                     ├── user_controller.js
                     └── user_routes.js
     ├── .gitignore
+    ├── Dockerfile
     ├── example.env
     ├── index.js
     ├── package-lock.json
-    ├── package.json
-    └── Readme.md
+    └── package.json
 banisi-front/
     ├── public/
         └── vite.svg
@@ -133,6 +135,7 @@ banisi-front/
         ├── index.css
         └── main.jsx
     ├── .gitignore
+    ├── Dockerfile
     ├── eslint.config.js
     ├── index.html
     ├── package-lock.json
@@ -143,6 +146,8 @@ extras/
     └── database.sql
 .gitignore
 Diagrama BD.pdf
+docker-compose.yml
 Documento Técnico.docx
 Documento Técnico.pdf
+Readme.md
 ```
