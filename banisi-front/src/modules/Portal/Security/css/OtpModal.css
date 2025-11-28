@@ -1,0 +1,98 @@
+.otp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.otp-modal {
+  position: relative;
+  background: #ffffff;
+  padding: 20px 24px 18px;
+  width: 100%;
+  max-width: 360px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.otp-close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  color: #888;
+}
+
+.otp-title {
+  margin: 8px 0 4px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #cf0072;
+  text-align: center;
+}
+
+.otp-text {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: #444444;
+  text-align: center;
+}
+
+.otp-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.otp-input {
+  width: 40px;
+  height: 44px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 8px;
+  border: 2px solid #d0d0d0;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.otp-input:focus {
+  border-color: #cf0072;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.otp-submit-btn {
+  width: 100%;
+  padding: 8px 0;
+  border: none;
+  border-radius: 8px;
+  background: #cf0072;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.otp-submit-btn:hover {
+  background: #8d014e;
+}
+
+.otp-secondary-btn {
+  width: 100%;
+  padding: 6px 0;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+}

@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(500),
         allowNull: false,
       },
+      otp: {
+        type: DataTypes.STRING(6),
+        allowNull: true,
+      },
+      otpCreated: {
+        type: DataTypes.DATE,
+        field: 'otp_created',
+      },
     },
     {
       tableName: 'users',

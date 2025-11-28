@@ -4,6 +4,7 @@ import "../../../../shared/css/loading.css";
 import { apiRequest } from "../../../../services/apiClient";
 import { useNavigate } from "react-router-dom";
 import { setToken } from "../../../../shared/helpers/jwt";
+import OtpModal from "./OtpModal";
 
 function AuthTabs() {
 
@@ -12,6 +13,8 @@ function AuthTabs() {
   const [activeTab, setActiveTab] = useState("login"); // "login" | "register"
 
   const [loading, setLoading] = useState(false);
+
+  const [open, setOpen] = useState(false);
 
   const [loginForm, setLoginForm] = useState({
     email: "",
@@ -24,6 +27,25 @@ function AuthTabs() {
     password: "",
     confirmPassword: "",
   });
+
+  const handleSubmitOtp = async (otp) => {
+    console.log("OTP ingresado:", otp);
+    setOpen(false);
+
+    setLoading(true);
+    const result = await apiRequest("/auth/login", {
+      method: "POST",
+      body: { ...loginForm, otp},
+    });
+    setLoading(false);
+
+    if(result.status === "ok") {
+      setToken(result.data.token);
+      navigate("/portal"); 
+    } else {
+      window.alert(`Error al iniciar sesión: ${result.message}`);
+    }
+  };
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -46,8 +68,9 @@ function AuthTabs() {
     setLoading(false);
 
     if(result.status === "ok") {
-      setToken(result.data.token);
-      navigate("/portal"); 
+      // setToken(result.data.token);
+      // navigate("/portal"); 
+      setOpen(true);
     } else {
       window.alert(`Error al iniciar sesión: ${result.message}`);
     }
@@ -61,6 +84,11 @@ function AuthTabs() {
 
   return (
     <>
+      <OtpModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onSubmit={handleSubmitOtp}
+      />
       <div id="loading" style={{ display: loading ? "block" : "none" }}></div>
       <div className="auth-page">
         <div className="auth-card">
