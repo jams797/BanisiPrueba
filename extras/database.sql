@@ -109,6 +109,8 @@ CREATE TABLE users (
   full_name            VARCHAR(200) NOT NULL,
   email                VARCHAR(200) NOT NULL,
   pass                 VARCHAR(500) NOT NULL,
+  otp                  VARCHAR(6)   NOT NULL,
+  otp_created          TIMESTAMPTZ  NULL DEFAULT NOW(),
 
   created_at           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at           TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -169,3 +171,11 @@ INSERT INTO credit_history_summary  (document_number, total_open_accounts, total
   ('0000000002', 1, 2000,  30, 'good', now()),
   ('0000000003', 1, 1000,  2,  'poor', now()),
   ('0000000004', 1, 100,   20, 'good', now());
+
+/*
+ALTER TABLE users
+  ADD otp VARCHAR(6) NULL;
+
+ALTER TABLE users
+  ADD otp_created TIMESTAMPTZ NULL DEFAULT NOW();
+*/
