@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: banisi_db
+    environment:
+      POSTGRES_DB: banisi_db
+      POSTGRES_USER: banisi_user
+      POSTGRES_PASSWORD: banisi_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      # Inicializar la BD con el script SQL
+      - ./extras/database.sql:/docker-entrypoint-initdb.d/01-database.sql:ro
+
+  api:
+    build:
+      context: ./banis-api
+      dockerfile: Dockerfile
+    container_name: banisi_api
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: banisi_db
+      DB_USER: banisi_user
+      DB_PASSWORD: banisi_pass
+      NODE_ENV: development
+      PORT: 3001
+      JWT_SECRET: supersecreto
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+
+  front:
+    build:
+      context: ./banisi-front
+      dockerfile: Dockerfile
+    container_name: banisi_front
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+volumes:
+  db_data:

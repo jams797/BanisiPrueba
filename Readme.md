@@ -48,8 +48,6 @@ npm run dev
 ## Estructura (árbol)
 ```
 banis-api/
-    ├── extras/
-        └── database.sql
     ├── src/
         ├── db/
             ├── models/
@@ -84,9 +82,11 @@ banis-api/
                     ├── user_controller.js
                     └── user_routes.js
     ├── .gitignore
+    ├── example.env
     ├── index.js
     ├── package-lock.json
-    └── package.json
+    ├── package.json
+    └── Readme.md
 banisi-front/
     ├── public/
         └── vite.svg
@@ -139,5 +139,10 @@ banisi-front/
     ├── package.json
     ├── README.md
     └── vite.config.js
+extras/
+    └── database.sql
 .gitignore
+Diagrama BD.pdf
+Documento Técnico.docx
+Documento Técnico.pdf
 ```
