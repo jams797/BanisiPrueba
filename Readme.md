@@ -15,6 +15,11 @@ Para los envios de SMS se está usando Twilio y en el envio de correo un SMTP
 ### Back
 https://documenter.getpostman.com/view/17159188/2sB3dLTBGf
 ### Front
+Usuario que se crea por defecto
+- emal: jmoran@viamatica.com
+- contrasela: 12345678
+
+!!!! Modificar el script antes que se ejecute para que sea otro correo, ya que hay doble autenticacón
 ```
 - /             (Formulario)
 - /portal/login (Login)
