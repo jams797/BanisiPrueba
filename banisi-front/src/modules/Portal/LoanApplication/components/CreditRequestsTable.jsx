@@ -42,6 +42,7 @@ function CreditRequestsTable({
               <th>Nombre</th>
               <th>Monto</th>
               <th>Plazo</th>
+              <th>Medidor</th>
               <th>Estado</th>
               <th>Destrino crédito</th>
               <th>Acciones</th>

@@ -1,4 +1,5 @@
 import { getStatusConfig } from "../helper/StatusConfig";
+import CreditRequestMeter from "./CreditRequestMeter";
 
 function CreditRequestRow({ request, actionLoadingId, onOpenActionModal }) {
   const statusCfg = getStatusConfig(request.statusCode);
@@ -13,7 +14,8 @@ function CreditRequestRow({ request, actionLoadingId, onOpenActionModal }) {
           ? `$ ${Number(request.requestedAmount).toLocaleString()}`
           : "-"}
       </td>
-      <td>{request.termMonths ? `${request.termMonths} m.` : "-"}</td>
+      <td style={{ padding: "5px" }}>{request.termMonths ? `${request.termMonths} m.` : "-"}</td>
+      <CreditRequestMeter value={request.pointScore} />
       <td>
         <span className={statusCfg.className}>{statusCfg.label}</span>
       </td>
